@@ -1,0 +1,37 @@
+- id: '1578539162627'
+  alias: Wake up message
+  description: Google Home Mini's wake up routine
+  trigger:
+  - at: 05:30
+    platform: time
+  condition:
+    condition: state
+    entity_id: 'binary_sensor.workday'
+    state: 'on'
+  action:
+  - data_template:
+      message: "\"{{ [\"Good morning. Its a great new day. Lose an hour in the morning\
+        \ and you will spend all day looking for it.\", \n     \"Good Morning. Shall\
+        \ we begin this day? Everyone should experience a sunrise at least once a\
+        \ day.\",\n     \"Good morning. Lets go kick some ass! Morning is wonderful.\
+        \ Its only drawback is that it comes at such an inconvenient time of day.\"\
+        ,\n     \"Good morning. Another day has begun! I hate when I dream of alarm\
+        \ clocks going off.\",\n     \"Good morning. Afternoons are hard. Mornings\
+        \ are pure evil from the pits of hell, which is why I don’t do them anymore.\"\
+        ,\n     \"Good morning. The brain is a wonderful organ; it starts working\
+        \ the moment you get up in the morning and does not stop until you get into\
+        \ the office.\",\n     \"Good morning. Once I shot an elephant in my pajamas.\
+        \ How he got into my pajamas I’ll never know.\",\n     \"Good morning. The\
+        \ secret of getting ahead is getting started.\",\n     \"Good morning. I like\
+        \ coffee because it gives me the illusion that I might be awake.\",\n    \
+        \ \"Good morning. I have measured out my life with coffee spoons.\",\n   \
+        \  \"Good morning. Unfortunately, morning comes whether you set the alarm\
+        \ or not.\",\n     \"Good morning. The lawyer’s first thought in the morning\
+        \ is how to handle the case of the ringing alarm clock.\",\n     \"Good morning.\
+        \ Time to get up and drink some coffee. Even bad coffee is better than no\
+        \ coffee at all.\",\n     \"Good morning. Some people wake up drowsy. Some\
+        \ people wake up energized. I wake up dead.\",\n     \"Good morning. I’m about\
+        \ to get my grind on. My coffee grind. LIke a true hustler.\"        \n  \
+        \  ] | random }}\"\n"
+    entity_id: media_player.googlehome6483
+    service: tts.google_translate_say

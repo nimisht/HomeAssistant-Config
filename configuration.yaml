@@ -1,0 +1,128 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+#Recorder settings
+recorder:
+  include:
+    entities:
+      - sensor.cpu_temperature
+
+#logger:
+#  default: debug
+#  logs:
+#    homeassistant.components.homekit: debug
+#    homeassistant.components.mqtt: debug
+#    homeassistant.components.vacuum: debug
+#    pyhap: debug
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+homeassistant:
+  customize: !include customize.yaml
+
+# MyQ Garage
+cover:
+  - platform: myq
+    username: !secret myQ_username
+    password: !secret myQ_password
+    
+# Example configuration.yaml entry
+binary_sensor:
+  - platform: workday
+    country: US
+    workdays: [mon, tues, wed, thu, fri]
+    excludes: [sat, sun, holiday]
+    add_holidays:
+      - '2020-12-26'
+      - '2020-12-31'
+    
+# Roomba
+vacuum:
+  - platform: roomba
+    host: !secret roomba_host
+    username: !secret roomba_username
+    password: !secret roomba_password
+    
+#Sprinkler system
+rachio:
+  api_key: !secret rachio_key
+  
+#LG WebOS OLED TV
+wake_on_lan:
+
+media_player:
+  platform: webostv
+  host: !secret lg_host
+  filename: webostv.conf
+  turn_on_action:
+    service: wake_on_lan.send_magic_packet
+    data:
+      mac: !secret lg_mac_address
+
+#Roomba switch for HomeKit integration
+switch:
+  - platform: template
+    switches:
+      homekit_roomba:
+        friendly_name: "Cleanerator"
+        value_template: "{{ is_state('vacuum.roomba', 'on') }}"
+        turn_on:
+          service: vacuum.turn_on
+          data:
+            entity_id: vacuum.roomba
+        turn_off:
+          service: vacuum.return_to_base
+          data:
+            entity_id: vacuum.roomba
+
+sensor:
+#Roomba battery for HomeKit integration
+  - platform: template
+    sensors:
+      homekit_roomba_battery:
+        friendly_name: "Cleanerator Battery"
+        device_class: battery
+        value_template: "{{ state_attr('vacuum.roomba', 'battery_level') }}"
+#Hardware temperature for monitoring's sake
+  - platform: command_line
+    name: CPU Temperature
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    # If errors occur, make sure configuration file is encoded as UTF-8
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+#HomeKit integration
+homekit:
+  filter:
+    include_domains:
+      - switch
+    include_entities:
+      media_player.lg_webos_smart_tv
+    exclude_entities:
+      - switch.side_yard_main
+      - switch.back_of_house_and_flower_bed
+      - switch.fence_line
+      - switch.front_yard_tree
+      - switch.side_sidewalk_grass
+      - switch.sprinklers_in_standby_mode
+      - switch.zone_4
+      - binary_sensor.sprinklers_online
+      - binary_sensor.updater
+      - automation.good_morning
+      - media_player.lg_webos_smart_tv
+  entity_config:
+   switch.homekit_roomba:
+     linked_battery_sensor: sensor.homekit_roomba_battery
+     low_battery_threshold: 15
