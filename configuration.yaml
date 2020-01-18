@@ -42,7 +42,7 @@ cover:
 binary_sensor:
   - platform: workday
     country: US
-    workdays: [mon, tues, wed, thu, fri]
+    workdays: [mon, tue, wed, thu, fri]
     excludes: [sat, sun, holiday]
     add_holidays:
       - '2020-12-26'
