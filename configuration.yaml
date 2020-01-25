@@ -62,15 +62,24 @@ rachio:
 #LG WebOS OLED TV
 wake_on_lan:
 
-media_player:
-  platform: webostv
+#media_player:
+#  platform: webostv
+#  host: !secret lg_host
+#  filename: webostv.conf
+#  turn_on_action:
+#    service: wake_on_lan.send_magic_packet
+#    data:
+#      mac: !secret lg_mac_address
+
+webostv:
   host: !secret lg_host
-  filename: webostv.conf
+  name: LG webOS OLED TV
+  standby_connection: true
   turn_on_action:
     service: wake_on_lan.send_magic_packet
     data:
       mac: !secret lg_mac_address
-
+      
 #Roomba switch for HomeKit integration
 switch:
   - platform: template
@@ -108,8 +117,9 @@ homekit:
   filter:
     include_domains:
       - switch
+#      - media_player
     include_entities:
-      media_player.lg_webos_smart_tv
+      media_player.lg_webos_oled_tv
     exclude_entities:
       - switch.side_yard_main
       - switch.back_of_house_and_flower_bed
@@ -121,7 +131,7 @@ homekit:
       - binary_sensor.sprinklers_online
       - binary_sensor.updater
       - automation.good_morning
-      - media_player.lg_webos_smart_tv
+#      - media_player.lg_webos_oled_tv
   entity_config:
    switch.homekit_roomba:
      linked_battery_sensor: sensor.homekit_roomba_battery

@@ -4,10 +4,10 @@
   trigger:
   - at: 05:30
     platform: time
- # condition:
- #   condition: state
- #   entity_id: 'binary_sensor.workday'
- #   state: 'on'
+#  condition:
+#    condition: state
+#    entity_id: 'binary_sensor.workday'
+#    state: 'on'
   action:
   - data_template:
       message: "\"{{ [\"Good morning. Its a great new day. Lose an hour in the morning\
@@ -33,5 +33,5 @@
         \ people wake up energized. I wake up dead.\",\n     \"Good morning. I’m about\
         \ to get my grind on. My coffee grind. LIke a true hustler.\"        \n  \
         \  ] | random }}\"\n"
-    entity_id: media_player.googlehome6483
+    entity_id: media_player.master_bedroom_speaker
     service: tts.google_translate_say
