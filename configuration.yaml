@@ -62,19 +62,9 @@ rachio:
 #LG WebOS OLED TV
 wake_on_lan:
 
-#media_player:
-#  platform: webostv
-#  host: !secret lg_host
-#  filename: webostv.conf
-#  turn_on_action:
-#    service: wake_on_lan.send_magic_packet
-#    data:
-#      mac: !secret lg_mac_address
-
 webostv:
   host: !secret lg_host
   name: LG webOS OLED TV
-  standby_connection: true
   turn_on_action:
     service: wake_on_lan.send_magic_packet
     data:
