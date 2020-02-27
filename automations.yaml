@@ -4,10 +4,6 @@
   trigger:
   - at: 05:30
     platform: time
-#  condition:
-#    condition: state
-#    entity_id: 'binary_sensor.workday'
-#    state: 'on'
   action:
   - data_template:
       message: "\"{{ [\"Good morning. Its a great new day. Lose an hour in the morning\
@@ -35,3 +31,31 @@
         \  ] | random }}\"\n"
     entity_id: media_player.master_bedroom_speaker
     service: tts.google_translate_say
+- id: '1582772640017'
+  alias: Sunset Lights
+  description: Turns on front porch lights, front foyer lights and backyard lights
+  trigger:
+  - event: sunrise
+    platform: sun
+  condition: []
+  action:
+  - entity_id: switch.front_porch_sconces
+    service: switch.turn_on
+  - entity_id: switch.front_foyer_sconces
+    service: switch.turn_on
+  - entity_id: light.back_porch_back_porch_lights
+    service: light.turn_on
+- id: '1582773272301'
+  alias: Sunrise Lights
+  description: Turns on front porch lights, front foyer lights and back porch lights
+  trigger:
+  - event: sunrise
+    platform: sun
+  condition: []
+  action:
+  - entity_id: switch.front_porch_sconces
+    service: switch.turn_off
+  - entity_id: light.back_porch_back_porch_lights
+    service: light.turn_off
+  - entity_id: switch.front_foyer_sconces
+    service: switch.turn_off

@@ -70,6 +70,13 @@ webostv:
     data:
       mac: !secret lg_mac_address
       
+# Example configuration.yaml entry
+lutron_caseta:
+    host: 192.168.1.4
+    keyfile: caseta.key
+    certfile: caseta.crt
+    ca_certs: caseta-bridge.crt
+      
 #Roomba switch for HomeKit integration
 switch:
   - platform: template
@@ -107,6 +114,7 @@ homekit:
   filter:
     include_domains:
       - switch
+      - light
 #      - media_player
     include_entities:
       media_player.lg_webos_oled_tv
@@ -118,6 +126,29 @@ homekit:
       - switch.side_sidewalk_grass
       - switch.sprinklers_in_standby_mode
       - switch.zone_4
+      - light.back_porch_back_porch_lights
+      - light.kitchen_table_chandelier
+      - light.living_room_floor_lamp
+      - light.living_room_pendants
+      - light.master_bathroom_main_lights
+      - light.master_bedroom_main_lights
+      - switch.2nd_floor_porch_deck_lights
+      - switch.3rd_floor_porch_deck_lights
+      - switch.front_foyer_sconces
+      - switch.front_porch_sconces
+      - switch.guest_bedroom_closet_main_lights
+      - switch.guest_bedroom_cove_lights
+      - switch.kitchen_island_lights
+      - switch.living_room_closet_light
+      - switch.living_room_cove_lights
+      - switch.living_room_spot_lights
+      - switch.master_bathroom_shower_light
+      - switch.master_bedroom_accent_lights
+      - switch.master_bedroom_closet_main_lights
+      - switch.stairs_step_lights
+      - switch.stairs_step_lights_2
+      - switch.stairs_step_lights_3
+      - switch.stairs_step_lights_4
       - binary_sensor.sprinklers_online
       - binary_sensor.updater
       - automation.good_morning
