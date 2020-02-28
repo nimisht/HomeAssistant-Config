@@ -35,7 +35,7 @@
   alias: Sunset Lights
   description: Turns on front porch lights, front foyer lights and backyard lights
   trigger:
-  - event: sunrise
+  - event: sunset
     platform: sun
   condition: []
   action:
