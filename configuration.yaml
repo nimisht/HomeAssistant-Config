@@ -69,38 +69,73 @@ webostv:
     service: wake_on_lan.send_magic_packet
     data:
       mac: !secret lg_mac_address
+  customize:
+    sources:
+      - Accessibility
+      - Amazon Prime Video
+      - Apple TV
+      - Channel Plus
+      - Device Connector
+      - Disney+
+      - FandangoNOW
+      - Google Play Movies & TV
+      - Guide, Hulu
+      - LG Content Store
+      - LG Remote Service
+      - Live TV
+      - Multi-view
+      - Music
+      - Netflix
+      - Notifications
+      - OLED Gallery
+      - PS3
+      - PS4
+      - Photo & Video
+      - Screen Share
+      - Search
+      - Shop Time
+      - Sling TV
+      - TV Cast
+      - TV Scheduler
+      - Unused
+      - User Guide
+      - VUDU
+      - Web Browser
+      - Xfinity Stream Beta
+      - YouTube
+    
       
 # Example configuration.yaml entry
-lutron_caseta:
-    host: !secret lutron_host
-    keyfile: caseta.key
-    certfile: caseta.crt
-    ca_certs: caseta-bridge.crt
+#lutron_caseta:
+#    host: !secret lutron_host
+#    keyfile: caseta.key
+#    certfile: caseta.crt
+#    ca_certs: caseta-bridge.crt
       
 #Roomba switch for HomeKit integration
-switch:
-  - platform: template
-    switches:
-      homekit_roomba:
-        friendly_name: "Cleanerator"
-        value_template: "{{ is_state('vacuum.roomba', 'on') }}"
-        turn_on:
-          service: vacuum.turn_on
-          data:
-            entity_id: vacuum.roomba
-        turn_off:
-          service: vacuum.return_to_base
-          data:
-            entity_id: vacuum.roomba
+#switch:
+#  - platform: template
+#    switches:
+#      homekit_roomba:
+#        friendly_name: "Cleanerator"
+#        value_template: "{{ is_state('vacuum.roomba', 'on') }}"
+#        turn_on:
+#          service: vacuum.turn_on
+#          data:
+#            entity_id: vacuum.roomba
+#        turn_off:
+#          service: vacuum.return_to_base
+#          data:
+#            entity_id: vacuum.roomba
 
 sensor:
 #Roomba battery for HomeKit integration
-  - platform: template
-    sensors:
-      homekit_roomba_battery:
-        friendly_name: "Cleanerator Battery"
-        device_class: battery
-        value_template: "{{ state_attr('vacuum.roomba', 'battery_level') }}"
+#  - platform: template
+#    sensors:
+#      homekit_roomba_battery:
+#        friendly_name: "Cleanerator Battery"
+#        device_class: battery
+#        value_template: "{{ state_attr('vacuum.roomba', 'battery_level') }}"
 #Hardware temperature for monitoring's sake
   - platform: command_line
     name: CPU Temperature
@@ -119,6 +154,8 @@ homekit:
     include_entities:
       media_player.lg_webos_oled_tv
     exclude_entities:
+      - switch.evening_schedule_schedule
+      - switch.morning_schedule_schedule
       - switch.side_yard_main
       - switch.back_of_house_and_flower_bed
       - switch.fence_line
@@ -153,7 +190,7 @@ homekit:
       - binary_sensor.updater
       - automation.good_morning
 #      - media_player.lg_webos_oled_tv
-  entity_config:
-   switch.homekit_roomba:
-     linked_battery_sensor: sensor.homekit_roomba_battery
-     low_battery_threshold: 15
+#  entity_config:
+#   switch.homekit_roomba:
+#     linked_battery_sensor: sensor.homekit_roomba_battery
+#     low_battery_threshold: 15

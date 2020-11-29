@@ -33,15 +33,13 @@
     service: tts.google_translate_say
 - id: '1582772640017'
   alias: Sunset Lights
-  description: Turns on front porch lights, front foyer lights and backyard lights
+  description: Turns on front porch lights and backyard lights
   trigger:
   - event: sunset
     platform: sun
   condition: []
   action:
   - entity_id: switch.front_porch_sconces
-    service: switch.turn_on
-  - entity_id: switch.front_foyer_sconces
     service: switch.turn_on
   - entity_id: light.back_porch_back_porch_lights
     service: light.turn_on
